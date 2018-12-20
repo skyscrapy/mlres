@@ -1,0 +1,96 @@
+\documentclass[letterpaper,11pt]{article}
+\title{CS4269/6362 Machine Learning, Spring 2016: Homework 4}
+\date{}
+\author{\bf Zejian Zhan}
+
+\usepackage{ dsfont }
+\usepackage[margin=1in]{geometry}
+% \usepackage{hyperref}
+\usepackage[colorlinks]{hyperref}
+\usepackage{capt-of}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{bbm}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{url}
+\usepackage{wrapfig}
+\usepackage{hyperref} 
+\usepackage{color}
+\usepackage{amstext}
+\usepackage{enumerate}
+\usepackage{amsmath,bm}
+\usepackage{fullpage}
+    
+\renewcommand{\baselinestretch}{1.15}    
+
+\begin{document}
+
+\maketitle
+
+\paragraph*{Instructions} Please fill in your name above.
+
+\paragraph{Question 1:}
+\begin{enumerate}[(a)]
+\item 
+There are two main steps in K-means algorithm: data assignment and new centroid process. For the data assignment process, each observation chooses the minimum distance(Euclidean distance) to the designated cluster center. So in this case, all observations choose the new nearest center, which apparently means the within cluster sum of square $\gamma_k$ decreases. On the other hand, we mathematically compute the arithmetic mean for the new center, which serves as a way of Least-squares estimation. So the within cluster sum of square $\gamma_k$ must decrease. Based on the two steps, we can clearly say that $\gamma_k$ won't increase in $K$.
+\item
+We can first compute the two norm from $\phi(x_i)$ to $\alpha_k$:
+\begin{eqnarray}
+||\phi(x_i)-\alpha_k||^2=\phi(x_i)^2-\frac{2}{|S_k|}\sum_{x_j \in S_k}{\phi(x_j)\phi(x_i)}+\frac{1}{|S_k|^2}\sum_{x_j\in S_k,x_h\in S_k}{\phi(x_j)\phi(x_h)} 
+\end{eqnarray}
+\begin{eqnarray}
+= k(x_i,x_i)-\frac{2}{|S_k|}\sum_{x_j\in S_k}{k(x_i,x_j)}+\frac{1}{|S_k|^2}\sum_{x_j\in S_k,x_h\in S_k}{k(x_j,x_h)}
+\end{eqnarray}
+So we can rewrite the formulate for the first step:
+\begin{eqnarray}
+\arg\min_{k}{||\phi(x_i)-\alpha_k||^2}
+\end{eqnarray}
+\begin{eqnarray}
+= \arg\min_{k}{\left\{ k(x_i,x_i)-\frac{2}{|S_k|}\sum_{x_j\in S_k}{k(x_i,x_j)}+\frac{1}{|S_k|^2}\sum_{x_j\in S_k,x_h\in S_k}{k(x_j,x_h)}\right\}}
+\end{eqnarray}
+and the second step of updating the mean vector for each cluster:
+\begin{eqnarray}
+\alpha_k=\frac{\sum_{x_i\in S_k}{\phi(x_i)}}{|S_k|}
+\end{eqnarray}
+\end{enumerate}
+
+\paragraph{Question 2:}
+\begin{enumerate}[(a)]
+\item
+We can write the second step of updating cluster center by the following formula:
+\begin{eqnarray}
+\arg\min_{x'}{\sum_{x\in S_k}{||x-x'||_1}}=\arg\min_{x'}{\sum_{x\in S_k}{\sum_{i=1}^d{|x_i-x'_i|}}}
+\end{eqnarray}
+\begin{eqnarray}
+= \arg\min_{x'}{\sum_{i=1}^d{\sum_{x\in S_k}}{|x_i-x'_i|}}
+\end{eqnarray}
+From the given useful fact and $d$ n the above formula denotes the feature dimension, we can see that the updated cluster center is derived as the median of the $i$th dimensional features of data in $S_k$. And clearly that's why it's also called $K-median$
+\item
+The reason why it is also called $K-medians$ is that when we update the centroid, actually we always find the median of $x_i$s in the set $S_k$. And by using $K medians$ we can make the clusters formed by them are the most compact.
+\end{enumerate}
+
+\paragraph{Question 3:}
+\begin{enumerate}[(a)]
+\item
+For E-step, we can write it like:
+\begin{eqnarray}
+\gamma(z_k)=\frac{\pi_k\mathcal{N}(x|\mu_k,\sum_{k})}{\sum_{j=1}^K{\pi_j}\mathcal{N}(x|\mu_j,\sum_{j})}
+\end{eqnarray}
+For F-step, we can derive the formula like:
+\begin{eqnarray}
+\mathds{E}_Z[\ln{p(x,z|\mu,\sum,\pi)}]= \sum_{k=1}{K}\gamma(z_k)\left\{\ln \pi_k + \ln \mathcal{N}(x|\mu_k,\sum_{k})\right\}
+\end{eqnarray}
+Basically we maximize the likelihood with regards to $\mu$,$\sum$ and $\pi$
+
+\item
+The total memory space will be $O(Km^2)$, where $K$ denotes the dimension of $\pi$ and $m$ denotes the dimension of data.
+\end{enumerate}
+
+
+\end{document}
+

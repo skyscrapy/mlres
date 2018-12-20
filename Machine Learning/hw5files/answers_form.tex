@@ -1,0 +1,94 @@
+\documentclass[letterpaper,11pt]{article}
+\title{CS4269/6362 Machine Learning, Spring 2016: Homework 5}
+\date{}
+\author{\bf Zejian Zhan}
+
+
+\usepackage[margin=1in]{geometry}
+% \usepackage{hyperref}
+\usepackage[colorlinks]{hyperref}
+\usepackage{capt-of}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{bbm}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{url}
+\usepackage{wrapfig}
+\usepackage{hyperref} 
+\usepackage{color}
+\usepackage{amstext}
+\usepackage{enumerate}
+\usepackage{amsmath,bm}
+\usepackage{fullpage}
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+    
+\renewcommand{\baselinestretch}{1.15}    
+
+\begin{document}
+
+\maketitle
+
+%\paragraph*{Instructions} Please fill in your name above.
+
+\paragraph{Question 1:}
+\paragraph{Bayesian network: }
+\begin{enumerate}[(a)]
+\item Yes. Note that from $A$ to $B$ we'll find $X_9$ is between $X_5$ and $X_{14}$ . $X_5$ is a tail-to-tail node on each path, and $X_{14}$ is a head-to-tail node on the path. So if $X_5$ and $X_{14}$ are observed, all paths from $A$ to $B$ will be blocked. So we can say that $A$ and $B$ are d-separated given $C$.
+\item No. For the same reason that $X_{15}$ is a head-to-head node on a path from $A$ to $B$. So if we observe $X_{15}$ , then there'll be at least a path from $A$ to $B$. So $A$ and $B$ are not d-separated given $C$.
+\item Yes. Note that all paths from $A$ to $B$ will pass through $X_{15}$. $X_{15}$ is head-to-head node and it is not observed. So all paths are blocked. And $A$ and $B$ are d-separated.
+\item No. $X_{16}$ is a head-to-head node on a path from $A$ to $B$. With the same reason explained in (b), we can see that $A$ and $B$ are not d-separated given $C$.
+\end{enumerate}
+\paragraph{Markov random field: }
+\begin{enumerate}[(a)]
+\item Yes. We can see that paths from $A$ to $B$ pass through nodes in $C$. So $A$ and $B$ are d-seperated.
+\item Yes. All paths from $A$ to $B$ pass through $X_{15}$. So $A$ and $B$ are d-seperated.
+\item No. There is a path from $A$ to $B$ ($4\rightarrow6\rightarrow11\rightarrow15\rightarrow12\rightarrow8\rightarrow5$) that does not pass any node in $C$. So $A$ and $B$ aren't d-seperated.
+\item Yes. All paths from $A$ to $B$ pass through $X_{15}$.  So $A$ and $B$ are d-seperated.
+\end{enumerate}
+
+\paragraph{Question 2:}
+$A = \{X_5\}$, as $\{X_5\}$ is markov blanket of $X_2$.
+
+\paragraph{Question 3:}
+\begin{enumerate}
+\item We can derive the formula of Log-likelihood function $P(X)$ on both labeled and unlabeled data:
+\begin{equation}
+L(\theta) = \sum_{i:x^i\in L}^{}{\log{\left( P(y^i) \prod_{j=1}^{m}{P_j(x^i_j | y^i)} \right)}} + \
+            \sum_{i:x^i\in U}^{}{\log{\sum_{y\in Y}^{}{P(x^i,y)}}}
+\end{equation}
+$m$ is the dimension of features, $\theta$ is the set of all parameters to be estimated: probability of class: $P(y)$, and the conditional probability of $jth$ feature taking value $x$ given class label: $P_j(x | y)$. Because we have some labeled data $L$, we can use maximum-likelihood estimation to estimate $P^0(y)$ and $P^0_j(x | y)$, which can be used later. 
+
+\item By using ${\theta}^0=\{P^0(y),P^0_j(x | y) \}$, we can equivalently maximize: $\hat{L}(\theta) = \sum_{i:x^i\in U}^{}{\log{\sum_{y\in Y}^{}{P(x^i,y)}}}$
+
+
+Since the above equation is hard to optimize as there is a summation inside logarithm, we need to find a way to move summation to the outside of logarithm:
+\begin{equation}
+\log{\sum_{y\in Y}^{}{{P(x^i, y)}}} \ge \sum_{y\in Y}^{}{\delta(y|x^i)\log{P(x^i,y)}}
+\end{equation}
+(since $log(x)$ is a concave function, and $\sum_{y\in Y}^{}{\delta(y|x^i)}=1,\,\, 0 \le \delta(y|x^i)\le 1$), we derive an auxiliary function: 
+\begin{equation}
+Q(\theta, {\theta}^{t-1}) = \sum_{i:x^i\in U}^{}{\sum_{y\in Y}^{}{\delta(y|x^i)\log{P(x^i,y)}}}
+\end{equation}
+where:
+\begin{equation}\label{MStep}
+\delta(y|x^i) = \frac{P^{t-1}(y) \sum_{j=1}^{m}{P^{t-1}_j(x_j^i | y)}   }{\sum_{y\in Y}^{}{P^{t-1}(y) \sum_{j=1}^{m}{P^{t-1}_j(x_j^i | y)}}}
+\end{equation}
+$Q(\theta, {\theta}^{t-1})$ is conditional expectation of complete-data log-likelihood conditioned on posterior distribution $\delta(y|x^i)$, so we finish E step. 
+\\
+\\
+For M step:
+\begin{align}
+P^{t-1}(y) & = \frac{1}{|U|}\sum_{i:x^i\in U}^{}{\delta(y|x^i)} \\
+P^{t-1}_j(x | y) & = \frac{\sum_{i:x^i\in U\,\&\,x_j^i=x}^{}{\delta(y|x^i)}}{\sum_{x^i\in U}^{}{\delta(y|x^i)}}
+\end{align}
+
+\end{enumerate}
+
+
+\end{document}
+

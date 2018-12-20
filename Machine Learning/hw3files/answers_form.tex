@@ -1,0 +1,193 @@
+\documentclass[letterpaper,11pt]{article}
+\title{CS4269/6362 Machine Learning, Spring 2016: Homework 3}
+\date{}
+\author{\bf Zejian Zhan}
+
+
+\usepackage[margin=1in]{geometry}
+% \usepackage{hyperref}
+\usepackage[colorlinks]{hyperref}
+\usepackage{capt-of}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{bbm}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{url}
+\usepackage{wrapfig}
+\usepackage{hyperref}
+\usepackage{color}
+\usepackage{amstext}
+\usepackage{enumerate}
+\usepackage{amsmath,bm}
+\usepackage{fullpage}
+
+\renewcommand{\baselinestretch}{1.15}
+
+\begin{document}
+
+\maketitle
+
+\paragraph*{Instructions} Please fill in your name above.
+
+\paragraph{Question 1:}
+\begin{enumerate}[(a)]
+\item \begin{enumerate}[(1)]
+Because $V_c$ is the volume of the hypercube which has the sphere touching its each side, we can get the formula: $V_c$ = $(2r)^d$
+so the ratios of $V_s$ and $V_c$ will be:
+\begin{eqnarray}
+\mathop {\lim }\limits_{d \to \infty } \frac{{{V_s}}}{{{V_c}}} = \mathop {\lim }\limits_{d \to \infty } {\raise0.7ex\hbox{${\frac{{{r^d}{\pi ^{d/2}}}}{{\Gamma (d/2 + 1)}}}$} \!\mathord{\left/
+ {\vphantom {{\frac{{{r^d}{\pi ^{d/2}}}}{{\Gamma (d/2 + 1)}}} {{{(2r)}^d}}}}\right.\kern-\nulldelimiterspace}
+\!\lower0.7ex\hbox{${{{(2r)}^d}}$}} = \mathop {\lim }\limits_{d \to \infty } {(\pi /4)^{d/2}}\frac{1}{{\Gamma (d/2 + 1)}}
+\end{eqnarray}
+Let $z=d/2$:
+\begin{eqnarray}
+\mathop {\lim }\limits_{d \to \infty } {(\pi /4)^{d/2}}\frac{1}{{\Gamma (d/2 + 1)}} = \mathop {\lim }\limits_{z \to \infty } {(\pi /4)^z}\frac{1}{{\Gamma (z + 1)}}
+\end{eqnarray}
+From the given equation:
+\begin{eqnarray}
+\lim_{z\rightarrow\infty}\frac{\Gamma(z+1)}{\sqrt{2\pi z}e^{-z}z^z}=1
+\end{eqnarray}
+we can derive:
+\begin{eqnarray}
+\mathop {\lim }\limits_{z \to \infty } {(\pi /4)^z}\frac{1}{{\Gamma (z + 1)}} = \mathop {\lim }\limits_{z \to \infty } {(\pi /4)^z}\frac{1}{{\sqrt {2\pi z} {e^{ - z}}{z^z}}} = \mathop {\lim }\limits_{z \to \infty } {(\pi e/4z)^z}\frac{1}{{\sqrt {2\pi z} }}
+\end{eqnarray}
+We can see that when $z$ is approaching infinite, the value of ${(\pi e/4z)^z}$ will approach 0 and $\frac{1}{{\sqrt {2\pi z} }}$ will also approach 0, thus $\mathop {\lim }\limits_{z \to \infty } {(\pi e/4z)^z}\frac{1}{{\sqrt {2\pi z} }}$ is 0. 
+
+\end{enumerate}
+\item \begin{enumerate}[(1)]
+The curse of dimensionality refers to various phenomena that arise when analyzing and organizing data in high-dimensional spaces (often with hundreds or thousands of dimensions) that do not occur in low-dimensional settings. And $Distance$ $functions$ is one of the domains curse of dimensionality suggests. The distance between the center and the corners is $r\sqrt{d}$, which increases without bound for fixed r. In other words, the high-dimensional unit hypercube can be said to consist almost entirely of the "corners" of the hypercube, with almost no "middle". And $Distance$ $functions$ loses their usefulness because the minimum and the maximum distance between a random reference point Q and a list of n random data points P1,...,Pn become indiscernible compared to the minimum distance: 0.
+\end{enumerate}
+\end{enumerate}
+
+\paragraph{Question 2:}
+We should choose $(c_1,\gamma_1)$. The reason is that the both of two parameters achieve the same cross validation error, but $(c_1,\gamma_1)$ has fewer support vectors, which means the model with parameter $(c_2,\gamma_2)$ tries to fit more with cross validation data set. So this model is more complex than another one. In this case, it may incur overfitting. Choosing $(c_1,\gamma_1)$ in the final model can obtain better generalization performance for unknown data set.
+
+
+\paragraph{Question 3:}
+\begin{enumerate}[(a)]
+\item \begin{enumerate}
+We can prove Hinge Loss function is convex by its definition that 
+For all $x_1$, $x_2$, and $\lambda  \in (0,1)$, if
+\begin{eqnarray}
+f(\lambda {x_1} + (1 - \lambda ){x_2}) \le \lambda f({x_1}) + (1 - \lambda )f({x_2})
+\end{eqnarray}
+then $f(x)$ is a convex function.
+
+We can classify the proof into four scenarios:
+
+{\bf Scenario 1:}
+Let ${x_1} < {x_2} < 1$
+\begin{eqnarray}
+\begin{array}{l}
+f(\lambda {x_1} + (1 - \lambda ){x_2}) - (\lambda f({x_1}) + (1 - \lambda )f({x_2}))\\
+ = 1 - \lambda {x_1} - (1 - \lambda ){x_2} - \lambda (1 - {x_1}) - (1 - \lambda )(1 - {x_2})\\
+ = 0
+\end{array}
+\end{eqnarray}
+
+
+{\bf Scenario 2:}
+Let $1 \le {x_1} < {x_2}$
+\begin{eqnarray}
+f(\lambda {x_1} + (1 - \lambda ){x_2}) - (\lambda f({x_1}) + (1 - \lambda )f({x_2})) = 0
+\end{eqnarray}
+
+
+{\bf Scenario 3:}
+Let ${x_1} < 1 \le {x_2}$ and if $\lambda {x_1} + (1 - \lambda ){x_2} < 1$
+\begin{eqnarray}
+\begin{array}{l}
+f(\lambda {x_1} + (1 - \lambda ){x_2}) - (\lambda f({x_1}) + (1 - \lambda )f({x_2}))\\
+ = 1 - \lambda {x_1} - (1 - \lambda ){x_2} - \lambda f({x_1})\\
+ = (1 - \lambda )(1 - {x_2}) \le 0
+\end{array}
+\end{eqnarray}
+{\bf Scenario 4:}
+Let ${x_1} < 1 \le {x_2}$ and if $\lambda {x_1} + (1 - \lambda ){x_2} \ge 1$
+\begin{eqnarray}
+\begin{array}{l}
+f(\lambda {x_1} + (1 - \lambda ){x_2}) - (\lambda f({x_1}) + (1 - \lambda )f({x_2}))\\
+ = 0 - \lambda (1 - {x_1}) = \lambda ({x_1} - 1) < 0
+\end{array}
+\end{eqnarray}
+
+Based on the above scenarios, we can see that Hinge Loss function $H(a)$ is a convex function of a.
+
+\end{enumerate}
+\item \begin{enumerate}
+When $\lambda ' = 2\lambda$, the two formulars are equivalent. With the new Hinge Loss function, we have: 
+\begin{eqnarray}
+\min_{w,b}\sum_{i=1}^n H'(y_i(w^Tx_i)) + \lambda'\|w\|_2^2
+\end{eqnarray}
+Then we can rewrite the formula as follows:
+\begin{eqnarray}
+\begin{gathered}
+  {\min _{{w_\beta },b}}\sum\limits_{i = 1}^n {\max (0.5 - {y_i}{w_\beta }^T{x_i},0)}  + \lambda '{\rm{||}}{w_\beta }{\rm{||}}_2^2 \hfill \\
+   = {\min _{w,b}}\sum\limits_{i = 1}^n {\max (0.5 - {y_i}{w^T}{x_i}/2,0)}  + \lambda '{\rm{||}}{w/2}{\rm{||}}_2^2 \hfill \\
+   = {\min _{w,b}}\sum\limits_{i = 1}^n {\frac{1}{2}*2\max (0.5 - {y_i}{w^T}{x_i}/2,0)}  + \lambda '{\rm{||}}{w/2}{\rm{||}}_2^2 \hfill \\
+   = {\min _{w,b}}\sum\limits_{i = 1}^n {\frac{1}{2}\max (1 - {y_i}{w^T}{x_i},0)}  + \frac{{\lambda '}}{4}{\rm{||}}w{\rm{||}}_2^2 \hfill \\
+\end{gathered}
+\end{eqnarray}
+If they are equal, then the condition $\lambda '/4 = \lambda /2$ must be satisfied. So $\lambda ' = 2\lambda$
+
+\end{enumerate}
+\end{enumerate}
+
+\paragraph{Question 4:}
+\begin{enumerate}[(a)]
+\item \begin{enumerate}
+Increasing $d$ make over-fitting more likely, because as $d$ increases, the training instances will have stronger influence on predicting jobs. Those new unknown instances which are near the each instance of the training set will have very much larger kernel values. However, those new instances which are not that near with any one in training set will has low values. This results in overfitting very likely.
+\end{enumerate}
+
+\item \begin{enumerate}
+Increasing $\sigma$ make over-fitting less likely, because $\sigma$ servers as an amplifier of the distance between x and x'. If the distance between x and x' is much larger than $\sigma$, the kernel function tends to be zero. Smaller $\sigma$ tends to make a local classifier while larger $\sigma$ tends to make a much more general classifier.
+\end{enumerate}
+
+\item \begin{enumerate}
+{\bf Prove:}
+
+Assume we have the descriptions about kernel functions:
+\begin{eqnarray}
+K({x_i},{x_{i'}}{\rm{)  = }}{K_1}({x_i},{x_{i'}}{\rm{)  + }}{K_2}({x_i},{x_{i'}}{\rm{)  = }} < {\phi ^1}({x_i}),{\phi ^1}({x_{i'}}) >  +  < {\phi ^2}({x_i}),{\phi ^2}({x_{i'}}) >
+\end{eqnarray}
+\begin{eqnarray}
+{\phi ^1}(x) = (\varphi _1^1(x),\varphi _2^1(x),...,\varphi _a^1(x))
+\end{eqnarray}
+\begin{eqnarray}
+{\phi ^2}(x) = (\varphi _1^2(x),\varphi _2^2(x),...,\varphi _b^2(x))
+\end{eqnarray}
+Then equation $K({x_i},{x_{i'}}{\rm{)  = }}{K_1}({x_i},{x_{i'}}{\rm{)  + }}{K_2}({x_i},{x_{i'}}{\rm{)}}$ can be derived as: 
+
+$\varphi _1^1({x_i})*\varphi _1^1({x_{i'}}) + \varphi _2^1({x_i})*\varphi _2^1({x_{i'}}) + ... + \varphi _a^1({x_i})*\varphi _a^1({x_{i'}}) + \varphi _1^2({x_i})*\varphi _1^2({x_{i'}}) + \varphi _2^2({x_i})*\varphi _2^2({x_{i'}}) + ... + \varphi _b^2({x_i})*\varphi _b^2({x_{i'}})$
+
+So that we can rewrite a kernel function as follows:
+\begin{eqnarray}
+{\phi ^0}(x) = (\varphi _1^1(x),\varphi _2^1(x),...,\varphi _a^1(x),\varphi _1^2(x),\varphi _2^2(x),...,\varphi _b^2(x))
+\end{eqnarray}
+Finally, we can get the form for $K({x_i},{x_{i'}}{\rm{)}}$:
+\begin{eqnarray}
+K({x_i},{x_{i'}}{\rm{)}} =  < {\phi ^0}({x_i}),{\phi ^0}({x_{i'}}) >.
+\end{eqnarray}
+So $K({x_i},{x_{i'}}{\rm{)  = }}{K_1}({x_i},{x_{i'}}{\rm{)  + }}{K_2}({x_i},{x_{i'}}{\rm{)}}$
+\end{enumerate}
+\end{enumerate}
+
+\paragraph{Question 5:}
+\begin{enumerate}[(a)]
+\item \begin{enumerate}
+The computational complexity of prediction of a linear SVM is $O(mn)$.
+
+\end{enumerate}
+
+\item \begin{enumerate}
+The computational complexity of prediction of a non-linear SVM is $O(ms)$.
+
+\end{enumerate}
+\end{enumerate}
+\end{document}
+

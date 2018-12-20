@@ -1,0 +1,62 @@
+\documentclass[14pt]{article}
+
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{url}
+\usepackage{wrapfig}
+\usepackage{hyperref} 
+\usepackage{enumerate}
+
+\oddsidemargin 0mm
+\evensidemargin 5mm
+\topmargin -20mm
+\textheight 240mm
+\textwidth 160mm
+
+
+
+\pagestyle{myheadings} 
+
+
+\title{Prediction of winner in NBA basketball games\\
+Zejian Zhan\\
+}
+\author{}
+\date{}
+
+\begin{document}
+\large
+\maketitle
+\thispagestyle{headings}
+
+\vspace{-.5in}
+
+\section{Motivation}
+The main objective of this project is to predict the winner of a NBA basketball game. The core steps are collecting data, building up models, setting up the features, designing learning algorithms and analyze the accuracy rate.
+\section{Data collection}
+Basically there are a lot of websites collecting the scores of the game, along with more detailed information like the length of a game, the recent game results of a team and so on. So the idea is to grasp the data from the website by program, for example, using python script to get data from \href={http://www.basketball-reference.com} or \href={http://www.nbaminer.com}.
+\section{Models}
+After collecting data, what is required to do is analyze it and try to visualize it. Some illustrations like histograms and scatter plots are preferred for better observation.
+\section{Features}
+To better predict the winner of a game, there are many factors worth attention. One important figure is the percentage of winning versus another team and the points difference. The percentage suggests the overall probability of which team is stronger while the points difference indicates the degree of being stronger of the winner. Besides, the players in both teams are also pretty important. Some professional players may suffer from illness so that they cannot participate into the game and this situation will weaken the probability of being the winner. Also the location of the game is also very crucial. It may be easier for people to win the game in their own city. So here it may be somewhat complicated to define the strength for players as players play different roles in a game. And it is also hard to define the ability point of a player.
+\section{Learning algorithms}
+Right now the basic idea is to set up the weight for each feature so that a mathematic formula will be obtained for the classification.
+\section{Evaluation}
+The collected data can be divided into two parts. One part is training data and another one is test data. So with the training data the parameters will be set and with the test data the prediction will be generated to compare with the actual result to calculate the accuracy.
+\section{Schedule}
+\begin{center}
+  \begin{tabular}{ | l | c | r |}
+    \hline
+    Week 3-4 & Collect data from the website &  \\ \hline
+    Week 5 & Analyze data for data pre-processing &  \\ \hline
+    Week 6 & Organize dataset &  \\ \hline 
+    Week 7-9 & Implement the core part like algorithm, train, test process and so on &  \\ \hline 
+    Week 10 & Interpret the results &  \\ \hline 
+    Week 11 & Improve the results by adjusting the algorithms &  \\ \hline 
+    Week 12 & Write the final project report and prepare for the presentation &  \\
+    \hline
+  \end{tabular}
+\end{center}
+
+
+\end{document}

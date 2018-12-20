@@ -1,0 +1,87 @@
+\documentclass[letterpaper,11pt]{article}
+\title{CS269/362 Machine Learning, Spring 2014: Homework X}
+\date{}
+\author{\bf Zejian Zhan}
+
+
+\usepackage[margin=1in]{geometry}
+% \usepackage{hyperref}
+\usepackage[colorlinks]{hyperref}
+\usepackage{capt-of}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{bbm}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{url}
+\usepackage{wrapfig}
+\usepackage{hyperref} 
+\usepackage{color}
+\usepackage{amstext}
+\usepackage{enumerate}
+\usepackage{amsmath,bm}
+\usepackage{fullpage}
+ \usepackage{breqn}   
+\renewcommand{\baselinestretch}{1.15}    
+
+\begin{document}
+
+\maketitle
+
+\paragraph*{Instructions} Please fill in your name above.
+
+\section{Question 1:}
+\begin{enumerate}[(a)]
+\item \begin{enumerate}[(1)]
+\item{
+\begin{dmath}
+f=\left(\begin{array}{c}n\\ x\end{array}\right)e^{\log{p^{x}}  (1-p)^{n-x}}=
+\left(\begin{array}{c}n\\ x\end{array}\right)e^{\log{}{p^{x}} +\log{}{(1-p)^{n-x}}}=\left(\begin{array}{c}n\\ x\end{array}\right)e^{x\log{}{p}  +(n-x)\log{}{(1-p)}}=\left(\begin{array}{c}n\\ x\end{array}\right)e^{x\log\frac{p}{1-p}+n\log(1-p)}=\left(\begin{array}{c}n\\ x\end{array}\right)e^{x\theta-n\log{(1+e^{\theta})}}
+\end{dmath}
+\begin{equation}
+Let \theta=\log{\frac{p}{1-p}},h(x)=\left(\begin{array}{c}n\\ x\end{array}\right),\eta(\theta)=\theta,T(x)=x,A(\theta)=n\log{(1+e^{\theta})}
+\end{equation}
+}
+\item{
+\begin{dmath}
+f=\frac{1}{x!}e^{\log{}{\lambda^{x}}-\lambda}=\frac{1}{x!}e^{x\log{}{\lambda}-\lambda}
+\end{dmath}
+\begin{equation}
+Let \theta=\log{}{\lambda},h(x)=\frac{1}{x!},\eta(\theta)=\theta,T(x)=x,A(\theta)=e^{\theta}
+\end{equation}
+}
+\item{
+\begin{dmath}
+f=e^{\log{}{\frac{1}{\sqrt{2\pi}\sigma}}e^{-\frac{{(x-\mu)}^2}{2\sigma^2}}}=e^{\log{}{\frac{1}{\sqrt{2\pi}\sigma}e^{\frac{-(x-\mu)^2}{2\sigma^2}}}}=e^{\log{}{\frac{1}{\sqrt{2\pi}\sigma}}+\frac{-(x-\mu)^2}{2\sigma^2}}=e^{-\log{}{\sqrt{2\pi}\sigma}+\frac{2x\mu-x^2-\mu^2}{2\sigma^2}}=e^{-\frac{1}{2}\log{}{2\pi\sigma^2}-\frac{x^2}{2\sigma^2}+\frac{\mu x-\frac{\mu^2}{2}}{\sigma^2}}
+\end{dmath}
+\begin{equation}
+Let \theta=\mu,\eta(\theta)=\mu,T(x)=x,A(\theta)=\frac{\theta^2}{2},h(x)=e^{-\frac{x^2}{2\sigma^2}-\frac{\log{}{2\pi\sigma^2}}{2}}
+\end{equation}
+}
+\end{enumerate}
+\item
+$\log{}{L(\lambda)}=\log{}{\prod_i^n}\frac{1}{y_{i}!}e^{y_{i}\eta(\lambda)-\lambda}=\sum_i^n\log{}{\frac{1}{y_{i}!}}e^{y_{i}\eta(\lambda)-\lambda}=\sum_i^n\log{}{\frac{1}{y_{i}!}e^{y_{i}\eta(\lambda)-\lambda}}=\sum_i^n\log{}{\frac{1}{y_{i}!}+y_{i}\eta(\lambda)-\lambda}$
+\item
+We call it "linear" because of $h(x)=\frac{1}{1+e^{-w^{T}x}}$, which is the logistic regression function. And we can use log function to convert it to $w^{T}x=\log{}{\frac{h(x)}{1-h(x)}}$. The right part of the formula is log-odds-ratio and the left part is a linear function of X.
+\end{enumerate}
+
+\paragraph{Question 2:}
+
+$P(Y,{X_1},{X_2},...,{X_{d - 1}}) = \sum\limits_{{X_d}} {P(Y,{X_1},{X_2},...,{X_d})}  = P(Y)\sum\limits_{{X_d}} {\prod\limits_{i = 1}^{d - 1} {P({X_i}|Y)} P({X_d}|Y) = } \\
+P(Y)\sum\limits_{{X_d}} {\prod\limits_{i = 1}^{d - 1} {P({X_i}|Y)} } P({X_d}|Y)  = P(Y)\prod\limits_{i = 1}^{d - 1} {P({X_i}|Y)}$
+
+
+\paragraph{Question 3:}
+We'll first look at the core part of NaiveBayes classifier. It takes all the features' likelihoods and get the multiplication of them, which may cause the probability to be 0 if any one of likelihood is 0 regardless of other factors. So in this case, a $\lambda$ can help solve this problem. But note that a large $\lambda$ will cause low variance and high bias, while a small one will lead to high variance and low bias. The first situation may be too smooth that it misses significant patterns among the data. And the second one may be fluctuated that it cannot predict good results with testing data.
+\paragraph{Question 4:}
+a.Assume that one operation takes constant time. So k operations one iteration means O(k).
+b.The advantage should be that parameters gets closer to optimal variable after one iteration. 
+The disadvantage is that it increases the time complexity. Say, if the training dataset is so huge that the training process will be very slow. And when k gets close to n, the SGD will become BDG.
+c. When we try to get optimal variable of vector w of Linear Regression, for instance, StochasticGradient can help to update the w.
+
+\end{document}
+
